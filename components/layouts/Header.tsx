@@ -2,7 +2,7 @@ import { Search } from "lucide-react";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 w-full  bg-white/95 px-8 py-4 flex items-center gap-x-8">
+    <header className="w-full  bg-white/95 px-8 py-4 flex items-center gap-x-8">
       <div className="font-bold text-lg">Gallery Pic</div>
       <div className="ml-12 relative  gap-x-1 flex items-center ">
         <span className="absolute top-1/2 -translate-y-1/2 left-5 ">

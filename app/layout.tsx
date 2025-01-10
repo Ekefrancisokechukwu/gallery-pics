@@ -29,10 +29,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        <div className="mt-3">
-          <FIlters />
+        <div className="sticky top-0 w-full bg-white z-50 pb-3">
+          <Header />
+          <div className="mt-3">
+            <FIlters />
+          </div>
         </div>
+
         {children}
       </body>
     </html>

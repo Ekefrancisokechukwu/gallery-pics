@@ -1,5 +1,9 @@
+import ImageContainer from "./ImageContainer";
+
 export default function Home() {
   return (
-    <div className=" font-[family-name:var(--font-geist-sans)] grid place-items-center"></div>
+    <div className=" font-[family-name:var(--font-geist-sans)] ">
+      <ImageContainer />
+    </div>
   );
 }
