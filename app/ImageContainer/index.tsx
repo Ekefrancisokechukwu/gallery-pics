@@ -3,6 +3,18 @@
 import Image from "next/image";
 import Masonry from "react-masonry-css";
 
+interface UnsplashImage {
+  id: string;
+  width: number;
+  height: number;
+  color: string;
+  urls: {
+    regular: string;
+    small: string;
+  };
+  alt_description: string;
+}
+
 const images = [
   {
     id: "1",
@@ -94,7 +106,7 @@ const ImageContainer = () => {
         {images.map((image) => (
           <div
             key={image.id}
-            className="mb-4 overflow-hidden rounded-lg shadow-md transition-transform duration-300 cursor-zoom-out ease-in-out hover:shadow-lg"
+            className="mb-4 overflow-hidden rounded-lg bg-[#0c260c] shadow-md transition-transform duration-300 cursor-zoom-out ease-in-out"
           >
             <div
               className="relative"
