@@ -3,17 +3,21 @@ import axios from "axios";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const query = searchParams.get("query") || "nature";
+  const query = searchParams.get("query");
+  const page = parseInt(searchParams.get("page") || "1", 10);
+
+  const BASE_URL = process.env.API_PHOTO_ENDPIONT;
+  const url =
+    query !== ""
+      ? `/search/photos?per_page=30&query=${query}&page=${page}`
+      : `/photos?per_page=40&page=${page}`;
 
   try {
-    const response = await axios.get(
-      `https://api.unsplash.com/photos/random/?count=40`,
-      {
-        headers: {
-          Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
-        },
-      }
-    );
+    const response = await axios.get(`${BASE_URL}${url}`, {
+      headers: {
+        Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
+      },
+    });
 
     return NextResponse.json(response.data);
   } catch (error) {
