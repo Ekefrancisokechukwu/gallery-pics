@@ -146,9 +146,9 @@ const ImageContainer = () => {
         </div>
       )} */}
 
-      <div className="w-[14rem] h-[calc(100vh_-123.75px)] pt-3 sticky top-[123.75px] z-50">
+      {/* <div className=" h-[calc(100vh_-123.75px)] pt-3 sticky top-[123.75px] z-50"> */}
         <FilterSidebar />
-      </div>
+      {/* </div> */}
 
       <div className="pb-4">
         <Masonry

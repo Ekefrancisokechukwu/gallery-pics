@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layouts/Header";
 import FIlters from "@/components/layouts/FIlters";
 import AppProvider from "@/provider/AppProvider";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,9 @@ export default function RootLayout({
           <div className="sticky top-0 w-full bg-white z-50 pb-3">
             <Header />
             <div className="mt-3">
-              <FIlters />
+              <Suspense>
+                <FIlters />
+              </Suspense>
             </div>
           </div>
 
