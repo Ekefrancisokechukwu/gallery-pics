@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@/hooks/useQuery";
+import { Check } from "lucide-react";
 
 const colors = [
   "black",
@@ -18,8 +19,10 @@ const colors = [
 const orientation = ["landscape", "portrait", "squarish"];
 
 const FilterSidebar = () => {
-  const { getParam } = useQuery();
+  const { getParam, setParam } = useQuery();
   const isSidebarOpen = getParam("filter_sidebar");
+  const queryColor = getParam("query") || "";
+  const orientationQuery = getParam("orientation") || "";
 
   return (
     <div
@@ -29,16 +32,25 @@ const FilterSidebar = () => {
     >
       <div className="flex items-center gap-x-4 mb-4">
         <h4 className="text-sm font-semibold">Colors</h4>
-        <div className="size-[1.2rem] rounded-full border" />
+        <div
+          style={{ background: queryColor }}
+          className="size-[1.2rem] rounded-full border"
+        />
       </div>
       <ul className="flex flex-wrap flex-shrink-0 gap-2">
         {colors.map((color, i) => {
           return (
             <li key={i}>
               <button
-                style={{ background: color }}
-                className="size-[1.2rem] border hover:ring ring-neutral-300 transition-all duration-500"
-              ></button>
+                onClick={() => setParam("query", color)}
+                style={{
+                  background: color,
+                  color: color === "white" ? "black" : "white",
+                }}
+                className="size-[1.2rem] border grid place-items-center hover:ring ring-neutral-300 transition-all duration-500"
+              >
+                {color === queryColor && <Check size={14} />}
+              </button>
             </li>
           );
         })}
@@ -50,7 +62,12 @@ const FilterSidebar = () => {
           {orientation.map((orient, i) => (
             <button
               key={i}
-              className="px-2.5 py-1.5 hover:bg-gray-100 rounded-full border text-sm font-semibold text-ne"
+              onClick={() => setParam("orientation", orient)}
+              className={`px-2.5 py-1.5  rounded-full border text-sm font-semibold  ${
+                orientationQuery === orient
+                  ? "bg-black text-white"
+                  : "hover:bg-gray-100"
+              }`}
             >
               {orient}
             </button>

@@ -3,20 +3,28 @@ import axios from "axios";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const query = searchParams.get("query");
+  const query = searchParams.get("query") || "";
+  const orientation = searchParams.get("orientation") || "";
   const page = parseInt(searchParams.get("page") || "1", 10);
 
   const BASE_URL = process.env.API_PHOTO_ENDPIONT;
-  const url =
-    query !== ""
-      ? `/search/photos?per_page=30&query=${query}&page=${page}`
-      : `/photos?per_page=40&page=${page}`;
+
+  const params: Record<string, string | number> = {
+    per_page: 30,
+    page: page | 1,
+  };
+
+  if (query) params.query = query;
+  if (orientation) params.orientation = orientation;
+
+  const endpoint = query || orientation ? "/search/photos" : "/photos";
 
   try {
-    const response = await axios.get(`${BASE_URL}${url}`, {
+    const response = await axios.get(`${BASE_URL}${endpoint}`, {
       headers: {
         Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
       },
+      params,
     });
 
     return NextResponse.json(response.data);
