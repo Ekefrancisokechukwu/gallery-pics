@@ -17,7 +17,7 @@ const FIlters = () => {
   };
 
   return (
-    <div className="px-8">
+    <div>
       <motion.button
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}

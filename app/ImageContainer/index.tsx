@@ -3,7 +3,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/legacy/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Masonry from "react-masonry-css";
 import { loadingArray } from "./data";
 import { Loader2Icon } from "lucide-react";
@@ -59,6 +59,7 @@ const ImageContainer = () => {
     fetchNextPage,
     isLoading,
     hasNextPage,
+    isPending,
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
@@ -71,6 +72,7 @@ const ImageContainer = () => {
     ],
     queryFn: fetchImages,
     initialPageParam: 0,
+    staleTime: 5000,
     getNextPageParam: (lastPage, pages) => {
       if ("total_pages" in lastPage && pages.length < lastPage.total_pages) {
         console.log("pages", pages.length);
@@ -108,7 +110,7 @@ const ImageContainer = () => {
       isImageDataProps(page) ? page.results : page
     ) || [];
 
-  console.log(allImages);
+  // console.log(allImages);
 
   if (status === "error") {
     return (

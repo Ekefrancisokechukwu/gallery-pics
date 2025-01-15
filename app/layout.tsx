@@ -5,6 +5,7 @@ import Header from "@/components/layouts/Header";
 import FIlters from "@/components/layouts/FIlters";
 import AppProvider from "@/provider/AppProvider";
 import { Suspense } from "react";
+import Sort from "@/components/layouts/Sort";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,9 +35,12 @@ export default function RootLayout({
         <AppProvider>
           <div className="sticky top-0 w-full bg-white z-50 pb-3">
             <Header />
-            <div className="mt-3">
+            <div className="mt-3 px-8 flex items-center justify-between">
               <Suspense>
                 <FIlters />
+              </Suspense>
+              <Suspense>
+                <Sort />
               </Suspense>
             </div>
           </div>
