@@ -5,6 +5,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("query") || "";
   const orientation = searchParams.get("orientation") || "";
+  const order_by = searchParams.get("order_by") || "";
   const page = parseInt(searchParams.get("page") || "1", 10);
 
   const BASE_URL = process.env.API_PHOTO_ENDPIONT;
@@ -12,10 +13,14 @@ export async function GET(request: Request) {
   const params: Record<string, string | number> = {
     per_page: 30,
     page: page | 1,
+    order_by: order_by,
   };
 
   if (query) params.query = query;
-  if (orientation) params.orientation = orientation;
+  if (orientation) {
+    params.orientation = orientation;
+    params.query = query || "waterfall";
+  }
 
   const endpoint = query || orientation ? "/search/photos" : "/photos";
 

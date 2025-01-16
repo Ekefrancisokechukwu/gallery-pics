@@ -31,9 +31,9 @@ interface UnsplashImage {
 type ApiResponse = ImageDataProps | UnsplashImage[];
 
 const fetchImages = async ({ pageParam = 1, queryKey }: any) => {
-  const [, { query, orientation }] = queryKey as [
+  const [, { query, orientation, order_by }] = queryKey as [
     string,
-    { query: string; orientation?: string; color?: string }
+    { query: string; orientation?: string; order_by?: string }
   ];
 
   const { data } = await axios.get(`/api/unsplash`, {
@@ -41,6 +41,7 @@ const fetchImages = async ({ pageParam = 1, queryKey }: any) => {
       query: query || "",
       orientation: orientation || "",
       page: pageParam,
+      order_by: order_by || "",
     },
   });
 
@@ -52,6 +53,7 @@ const ImageContainer = () => {
   const { getParam } = useURLQuery();
   const query = getParam("query");
   const orientation = getParam("orientation");
+  const order_by = getParam("order_by");
 
   const {
     data,
@@ -59,7 +61,6 @@ const ImageContainer = () => {
     fetchNextPage,
     isLoading,
     hasNextPage,
-    isPending,
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
@@ -68,6 +69,7 @@ const ImageContainer = () => {
       {
         query: query || "",
         orientation: orientation || "",
+        order_by: order_by || "",
       },
     ],
     queryFn: fetchImages,
