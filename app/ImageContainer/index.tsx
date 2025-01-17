@@ -2,13 +2,13 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Image from "next/legacy/image";
 import { useEffect, useRef } from "react";
 import Masonry from "react-masonry-css";
 import { loadingArray } from "./data";
 import { Loader2Icon } from "lucide-react";
 import FilterSidebar from "./FilterSidebar";
 import { useQuery as useURLQuery } from "@/hooks/useQuery";
+import SingleImage from "./SingleImage";
 
 interface ImageDataProps {
   total: number;
@@ -16,7 +16,7 @@ interface ImageDataProps {
   results: UnsplashImage[];
 }
 
-interface UnsplashImage {
+export interface UnsplashImage {
   id: string;
   width: number;
   height: number;
@@ -26,6 +26,11 @@ interface UnsplashImage {
     small: string;
   };
   alt_description: string;
+  user: {
+    first_name: string;
+    last_name: string;
+    profile_image: { small: string };
+  };
 }
 
 type ApiResponse = ImageDataProps | UnsplashImage[];
@@ -76,10 +81,7 @@ const ImageContainer = () => {
     initialPageParam: 0,
     staleTime: 5000,
     getNextPageParam: (lastPage, pages) => {
-      if ("total_pages" in lastPage && pages.length < lastPage.total_pages) {
-        console.log("pages", pages.length);
-        console.log("last page", lastPage);
-
+      if (pages.length < lastPage.total_pages) {
         return pages.length + 1;
       }
       return undefined;
@@ -111,8 +113,6 @@ const ImageContainer = () => {
     data?.pages.flatMap((page) =>
       isImageDataProps(page) ? page.results : page
     ) || [];
-
-  // console.log(allImages);
 
   if (status === "error") {
     return (
@@ -154,27 +154,7 @@ const ImageContainer = () => {
             columnClassName="pl-4 bg-background"
           >
             {allImages.map((photo) => (
-              <div
-                style={{ background: photo.color }}
-                key={photo.id}
-                className="mb-4 overflow-hidden rounded-lg   transition-transform duration-300 cursor-zoom-in ease-in-out"
-              >
-                <div
-                  className="relative"
-                  style={{
-                    paddingTop: `${(photo.height / photo.width) * 100}%`,
-                  }}
-                >
-                  <Image
-                    src={photo.urls.regular}
-                    alt={photo.alt_description}
-                    layout="fill"
-                    objectFit="cover"
-                    className="transition-opacity duration-300 object-cover"
-                    sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 33vw"
-                  />
-                </div>
-              </div>
+              <SingleImage key={photo.id} photo={photo} />
             ))}
           </Masonry>
           <div ref={observerTarget} className="h-10 mt-4" />

@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 
   const params: Record<string, string | number> = {
     per_page: 30,
-    page: page | 1,
+    page: page,
     order_by: order_by,
   };
 
