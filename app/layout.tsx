@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layouts/Header";
-import FIlters from "@/components/layouts/FIlters";
 import AppProvider from "@/provider/AppProvider";
-import { Suspense } from "react";
-import Sort from "@/components/layouts/Sort";
 import { Modal } from "@/components/ui/Modal";
 
 const geistSans = Geist({
@@ -36,21 +33,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AppProvider>
-          <div className="sticky top-0 w-full bg-white z-50 pb-3">
+          <div className="sticky top-0 w-full bg-white z-50 pb-2">
             <Header />
-            <div className="mt-3 px-8 flex items-center justify-between">
-              <Suspense>
-                <FIlters />
-              </Suspense>
-              <Suspense>
-                <Sort />
-              </Suspense>
-            </div>
           </div>
 
           {children}
           <div>{preview}</div>
-          <Modal></Modal>
+          {/* <Modal></Modal> */}
         </AppProvider>
       </body>
     </html>

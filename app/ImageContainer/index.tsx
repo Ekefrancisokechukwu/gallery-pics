@@ -10,31 +10,6 @@ import FilterSidebar from "./FilterSidebar";
 import { useQuery as useURLQuery } from "@/hooks/useQuery";
 import SingleImage from "./SingleImage";
 
-interface ImageDataProps {
-  total: number;
-  total_pages: number;
-  results: UnsplashImage[];
-}
-
-export interface UnsplashImage {
-  id: string;
-  width: number;
-  height: number;
-  color: string;
-  urls: {
-    regular: string;
-    small: string;
-  };
-  alt_description: string;
-  user: {
-    first_name: string;
-    last_name: string;
-    profile_image: { small: string };
-  };
-}
-
-type ApiResponse = ImageDataProps | UnsplashImage[];
-
 const fetchImages = async ({ pageParam = 1, queryKey }: any) => {
   const [, { query, orientation, order_by }] = queryKey as [
     string,
@@ -168,6 +143,7 @@ const ImageContainer = () => {
     </main>
   );
 };
+
 export default ImageContainer;
 
 const isImageDataProps = (data: ApiResponse): data is ImageDataProps => {

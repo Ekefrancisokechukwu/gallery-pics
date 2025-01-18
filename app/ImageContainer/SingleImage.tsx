@@ -1,5 +1,4 @@
 import Image from "next/legacy/image";
-import { UnsplashImage } from ".";
 import { Download } from "lucide-react";
 import Link from "next/link";
 

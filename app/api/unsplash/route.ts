@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
+import axiosInstance from "@/lib/axios";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -7,8 +8,6 @@ export async function GET(request: Request) {
   const orientation = searchParams.get("orientation") || "";
   const order_by = searchParams.get("order_by") || "";
   const page = parseInt(searchParams.get("page") || "1", 10);
-
-  const BASE_URL = process.env.API_PHOTO_ENDPIONT;
 
   const params: Record<string, string | number> = {
     per_page: 30,
@@ -25,10 +24,7 @@ export async function GET(request: Request) {
   const endpoint = query || orientation ? "/search/photos" : "/photos";
 
   try {
-    const response = await axios.get(`${BASE_URL}${endpoint}`, {
-      headers: {
-        Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
-      },
+    const response = await axiosInstance.get(`${endpoint}`, {
       params,
     });
 

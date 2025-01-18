@@ -1,9 +1,14 @@
 "use client";
 
+import { useClickOutside } from "@/hooks/useClickOutside";
+import { Download } from "lucide-react";
 import Image from "next/legacy/image";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export const Modal = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const { isOpen, setIsopen } = useClickOutside(containerRef);
+
   useEffect(() => {
     document.documentElement.style.overflow = "hidden";
   }, []);
@@ -18,7 +23,26 @@ export const Modal = () => {
             <figure className="size-[2.5rem] bg-gray-100 rounded-full"></figure>
             <p className="font-semibold text-gray-700 text-sm">John Smith</p>
           </div>
+
+          <div>
+            <div ref={containerRef} className="relative">
+              <button
+                onClick={() => setIsopen(!isOpen)}
+                className="border text-white bg-stone-950 rounded-lg px-3 py-1.5 hover:bg-opacity-60 flex items-center gap-x-2  text-sm font-semibold"
+              >
+                Download <Download size={19} />
+              </button>
+              <div
+                className={`absolute transition-all duration-150 origin-top-right ease-in right-0 z-50 top-[110%]  w-[10rem] bg-white border shadow-xl rounded-lg p-4  ${
+                  isOpen
+                    ? "visible opacity-100 scale-100"
+                    : "invisible opacity-0 scale-75"
+                } `}
+              ></div>
+            </div>
+          </div>
         </div>
+
         <div className="mt-7 grid place-items-center">
           <Image
             src={

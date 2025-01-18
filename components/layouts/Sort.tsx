@@ -2,46 +2,29 @@
 
 import { useQuery } from "@/hooks/useQuery";
 import { ChevronsUpDown, ChevronDown, Check } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion } from "motion/react";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 const sortBy = ["latest", "relevant"];
 
-type EventType = MouseEvent | TouchEvent;
+// type EventType = MouseEvent | TouchEvent;
 
 const Sort = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsopen] = useState(false);
+  // const [isOpen, setIsopen] = useState(false);
   const { getParam, setParam } = useQuery();
+  const { isOpen, setIsopen } = useClickOutside(containerRef);
   const orderBy = getParam("order_by") || "relevant";
 
   const toggleDropdown = () => {
     setIsopen(!isOpen);
   };
 
-  const handleClickOutside = (events: EventType) => {
-    if (
-      containerRef.current &&
-      !containerRef.current.contains(events.target as Node)
-    ) {
-      setIsopen(false);
-    }
-  };
-
   const handleSelect = (sort: string) => {
     setParam("order_by", sort);
     setIsopen(false);
   };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("touchstart", handleClickOutside);
-
-    return () => {
-      document.addEventListener("mousedown", handleClickOutside);
-      document.addEventListener("touchstart", handleClickOutside);
-    };
-  }, [containerRef, isOpen]);
 
   return (
     <div ref={containerRef} className="relative">
