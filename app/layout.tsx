@@ -6,6 +6,7 @@ import FIlters from "@/components/layouts/FIlters";
 import AppProvider from "@/provider/AppProvider";
 import { Suspense } from "react";
 import Sort from "@/components/layouts/Sort";
+import { Modal } from "@/components/ui/Modal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,8 +24,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+  preview,
   children,
 }: Readonly<{
+  preview: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
@@ -46,6 +49,8 @@ export default function RootLayout({
           </div>
 
           {children}
+          <div>{preview}</div>
+          <Modal></Modal>
         </AppProvider>
       </body>
     </html>

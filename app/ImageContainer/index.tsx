@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useRef } from "react";
 import Masonry from "react-masonry-css";
-import { loadingArray } from "./data";
+import { breakpointColumnsObj, loadingArray } from "./data";
 import { Loader2Icon } from "lucide-react";
 import FilterSidebar from "./FilterSidebar";
 import { useQuery as useURLQuery } from "@/hooks/useQuery";
@@ -169,13 +169,6 @@ const ImageContainer = () => {
   );
 };
 export default ImageContainer;
-
-const breakpointColumnsObj = {
-  default: 4,
-  1100: 3,
-  700: 2,
-  500: 1,
-};
 
 const isImageDataProps = (data: ApiResponse): data is ImageDataProps => {
   return (data as ImageDataProps).results !== undefined;

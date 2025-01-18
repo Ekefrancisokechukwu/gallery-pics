@@ -1,6 +1,7 @@
 import Image from "next/legacy/image";
 import { UnsplashImage } from ".";
 import { Download } from "lucide-react";
+import Link from "next/link";
 
 interface SingleImageProps {
   photo: UnsplashImage;
@@ -43,9 +44,12 @@ const SingleImage = ({ photo }: SingleImageProps) => {
           </p>
         </div>
 
-        <button className="bg-gray-100 cursor-pointer flex ms-auto hover:bg-gray-200 transition-all duration-300   p-2 rounded-lg">
+        <Link
+          href={`/${photo.id}`}
+          className="bg-gray-100 cursor-pointer w-fit flex ms-auto hover:bg-gray-200 transition-all duration-300   p-2 rounded-lg"
+        >
           <Download size={20} />
-        </button>
+        </Link>
       </div>
     </div>
   );
