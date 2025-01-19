@@ -3,7 +3,7 @@
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { Download } from "lucide-react";
 import Image from "next/legacy/image";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { motion } from "motion/react";
 
 interface ImageModalProps {

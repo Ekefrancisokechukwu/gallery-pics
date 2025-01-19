@@ -11,8 +11,6 @@ export async function GET(
   try {
     const response = await axiosInstance.get(`/photos/${id}`);
 
-    console.log("i was reached", id);
-
     return NextResponse.json(response.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {

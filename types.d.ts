@@ -63,6 +63,8 @@ interface UnsplashImage {
   user: {
     username: string;
     name: string;
+    first_name: string;
+    last_name: string;
     profile_image: { small: string };
     links: {
       self: string;

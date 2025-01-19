@@ -1,13 +1,29 @@
+"use client";
+
 import Image from "next/legacy/image";
 import { Download } from "lucide-react";
 import Link from "next/link";
 import { motion } from "motion/react";
+import { useQuery } from "@/hooks/useQuery";
+import { useRouter } from "next/navigation";
 
 interface SingleImageProps {
   photo: UnsplashImage;
 }
 
 const SingleImage = ({ photo }: SingleImageProps) => {
+  const { getParam } = useQuery();
+  const isFilterSidebar = getParam("filter_sidebar") || "";
+  const router = useRouter();
+
+  const openMoal = (id: string) => {
+    if (isFilterSidebar) {
+      router.push(`/${id}?filter_sidebar=true`);
+    } else {
+      router.push(`/${id}`);
+    }
+  };
+
   return (
     <div
       style={{ background: photo.color }}
@@ -47,12 +63,12 @@ const SingleImage = ({ photo }: SingleImageProps) => {
           </p>
         </div>
 
-        <Link
-          href={`/${photo.id}`}
+        <button
+          onClick={() => openMoal(photo.id)}
           className="bg-gray-100 cursor-pointer w-fit flex ms-auto hover:bg-gray-200 transition-all duration-300   p-2 rounded-lg"
         >
           <Download size={20} />
-        </Link>
+        </button>
       </div>
     </div>
   );
