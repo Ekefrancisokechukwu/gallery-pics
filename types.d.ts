@@ -1,33 +1,37 @@
-type SingleImageData = {
-  id: string;
-  width: number;
-  height: number;
-  color: string;
-  downloads: number;
-  likes: number;
-  description: string;
-  urls: {
-    raw: string;
-    full: string;
-  };
-  links: {
-    self: string;
-    html: string;
-    download: string;
-    download_location: string;
-  };
-  user: {
-    username: string;
-    name: string;
-    links: {
-      self: string;
-      html: string;
-      photos: string;
-      likes: string;
-      portfolio: string;
-    };
-  };
-};
+// type SingleImageData = {
+//   id: string;
+//   width: number;
+//   height: number;
+//   color: string;
+//   downloads: number;
+//   likes: number;
+//   description: string;
+//   alt_description: string;
+//   urls: {
+//     raw: string;
+//     full: string;
+//     regular: string;
+//   };
+//   links: {
+//     self: string;
+//     html: string;
+//     download: string;
+//     download_location: string;
+//   };
+
+//   user: {
+//     username: string;
+//     name: string;
+//     profile_image: { small: string };
+//     links: {
+//       self: string;
+//       html: string;
+//       photos: string;
+//       likes: string;
+//       portfolio: string;
+//     };
+//   };
+// };
 
 interface ImageDataProps {
   total: number;
@@ -40,15 +44,33 @@ interface UnsplashImage {
   width: number;
   height: number;
   color: string;
-  urls: {
-    regular: string;
-    small: string;
-  };
+  downloads: number;
+  likes: number;
+  description: string;
   alt_description: string;
+  urls: {
+    raw: string;
+    full: string;
+    regular: string;
+  };
+  links: {
+    self: string;
+    html: string;
+    download: string;
+    download_location: string;
+  };
+
   user: {
-    first_name: string;
-    last_name: string;
+    username: string;
+    name: string;
     profile_image: { small: string };
+    links: {
+      self: string;
+      html: string;
+      photos: string;
+      likes: string;
+      portfolio: string;
+    };
   };
 }
 

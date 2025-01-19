@@ -1,7 +1,6 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useEffect, useRef } from "react";
 import Masonry from "react-masonry-css";
 import { breakpointColumnsObj, loadingArray } from "./data";
@@ -9,24 +8,7 @@ import { Loader2Icon } from "lucide-react";
 import FilterSidebar from "./FilterSidebar";
 import { useQuery as useURLQuery } from "@/hooks/useQuery";
 import SingleImage from "./SingleImage";
-
-const fetchImages = async ({ pageParam = 1, queryKey }: any) => {
-  const [, { query, orientation, order_by }] = queryKey as [
-    string,
-    { query: string; orientation?: string; order_by?: string }
-  ];
-
-  const { data } = await axios.get(`/api/unsplash`, {
-    params: {
-      query: query || "",
-      orientation: orientation || "",
-      page: pageParam,
-      order_by: order_by || "",
-    },
-  });
-
-  return data;
-};
+import { fetchImages } from "@/lib/dataAsync";
 
 const ImageContainer = () => {
   const observerTarget = useRef<HTMLDivElement>(null);

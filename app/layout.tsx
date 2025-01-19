@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layouts/Header";
 import AppProvider from "@/provider/AppProvider";
-import { Modal } from "@/components/ui/Modal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,10 +20,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  preview,
+  modal,
   children,
 }: Readonly<{
-  preview: React.ReactNode;
+  modal: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
@@ -38,7 +37,7 @@ export default function RootLayout({
           </div>
 
           {children}
-          <div>{preview}</div>
+          <div>{modal}</div>
           {/* <Modal></Modal> */}
         </AppProvider>
       </body>
