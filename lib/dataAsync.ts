@@ -1,6 +1,15 @@
 import axios from "axios";
 
-export const fetchImages = async ({ pageParam = 1, queryKey }: any) => {
+export const fetchImages = async ({
+  pageParam = 1,
+  queryKey,
+}: {
+  pageParam: number;
+  queryKey: [
+    string,
+    { query: string; orientation?: string; order_by?: string }
+  ];
+}) => {
   const [, { query, orientation, order_by }] = queryKey as [
     string,
     { query: string; orientation?: string; order_by?: string }

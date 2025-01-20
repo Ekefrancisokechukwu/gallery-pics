@@ -30,6 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
         <AppProvider>
           <div className="sticky top-0 w-full bg-white z-50 pb-2">
@@ -38,7 +39,6 @@ export default function RootLayout({
 
           {children}
           <div>{modal}</div>
-          {/* <Modal></Modal> */}
         </AppProvider>
       </body>
     </html>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { Download } from "lucide-react";
+import { Download, MapPin } from "lucide-react";
 import Image from "next/legacy/image";
 import { useRef } from "react";
 import { motion } from "motion/react";
@@ -13,6 +13,8 @@ interface ImageModalProps {
 export const ImageModal = ({ data }: ImageModalProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { isOpen, setIsopen } = useClickOutside(containerRef);
+
+  console.log(data);
 
   return (
     <div>
@@ -70,6 +72,29 @@ export const ImageModal = ({ data }: ImageModalProps) => {
           />
         </div>
       </div>
+      <div className="mt-8 flex  items-center gap-x-28">
+        <div className="text-sm">
+          <h4 className="font-semibold text-gray-500">Views</h4>
+          <p className="font-semibold">{data.views}</p>
+        </div>
+        <div className="text-sm">
+          <h4 className="font-semibold text-gray-500">Downloads</h4>
+          <p className="font-semibold">{data.downloads}</p>
+        </div>
+      </div>
+      {data.description && <p className="mt-4 text-sm">{data.description}</p>}
+      <ul className="mt-5">
+        {data.location.city ||
+          (data.location.country && (
+            <li className="flex items-center text-gray-400">
+              <MapPin size={18} />
+              <span>
+                {data.location.city && `${data.location.city},`}
+                {data.location.country && data.location.country}
+              </span>
+            </li>
+          ))}
+      </ul>
     </div>
   );
 };

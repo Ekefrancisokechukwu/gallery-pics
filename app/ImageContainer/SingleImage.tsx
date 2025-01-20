@@ -2,7 +2,6 @@
 
 import Image from "next/legacy/image";
 import { Download } from "lucide-react";
-import Link from "next/link";
 import { motion } from "motion/react";
 import { useQuery } from "@/hooks/useQuery";
 import { useRouter } from "next/navigation";
@@ -16,11 +15,14 @@ const SingleImage = ({ photo }: SingleImageProps) => {
   const isFilterSidebar = getParam("filter_sidebar") || "";
   const router = useRouter();
 
-  const openMoal = (id: string) => {
+  const openMoal = () => {
+    const id = photo.id;
+    const slug = photo.alt_description.split(" ").join("-");
+
     if (isFilterSidebar) {
-      router.push(`/${id}?filter_sidebar=true`);
+      router.push(`/${slug}_id${id}?filter_sidebar=true`);
     } else {
-      router.push(`/${id}`);
+      router.push(`/${slug}_id${id}`);
     }
   };
 
@@ -52,7 +54,7 @@ const SingleImage = ({ photo }: SingleImageProps) => {
           >
             <Image
               src={photo.user.profile_image.small}
-              alt={"profile_img"}
+              alt={photo.user.name}
               width={100}
               height={100}
               className="rounded-full object-cover w-full h-full"
@@ -64,7 +66,7 @@ const SingleImage = ({ photo }: SingleImageProps) => {
         </div>
 
         <button
-          onClick={() => openMoal(photo.id)}
+          onClick={openMoal}
           className="bg-gray-100 cursor-pointer w-fit flex ms-auto hover:bg-gray-200 transition-all duration-300   p-2 rounded-lg"
         >
           <Download size={20} />

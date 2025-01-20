@@ -1,10 +1,16 @@
 import { Modal } from "@/components/ui/Modal";
 import axiosInstance from "@/lib/axios";
 import { ImageModal } from "./ImageModal";
+import { notFound } from "next/navigation";
 
 async function getPhoto(id: string) {
-  const res = await axiosInstance.get(`/photos/${id}`);
-  return res.data;
+  try {
+    const res = await axiosInstance.get(`/photos/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error(`Failed to fetch photo with id ${id}:`, error);
+    // throw new Error(`Failed to fetch photo with id ${id}`);
+  }
 }
 
 export default async function PreviewPage({
@@ -12,10 +18,14 @@ export default async function PreviewPage({
 }: {
   params: { id: string };
 }) {
-  const { id } = await params;
-  const data = await getPhoto(id);
+  const { id: slug } = await params;
+  const id = slug.split("_id").pop();
 
-  // console.log(response);
+  const data = await getPhoto(id!);
+
+  if (!id) {
+    notFound();
+  }
 
   return (
     <Modal>

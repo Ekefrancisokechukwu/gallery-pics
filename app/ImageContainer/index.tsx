@@ -66,11 +66,6 @@ const ImageContainer = () => {
     };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  const allImages =
-    data?.pages.flatMap((page) =>
-      isImageDataProps(page) ? page.results : page
-    ) || [];
-
   if (status === "error") {
     return (
       <div className="px-8 py-10 text-center font-semibold text-lg">
@@ -78,6 +73,13 @@ const ImageContainer = () => {
       </div>
     );
   }
+
+  const allImages =
+    data?.pages.flatMap((page) =>
+      isImageDataProps(page) ? page.results : page
+    ) || [];
+
+  console.log(data);
 
   return (
     <main className="px-8 pt-6  grid grid-cols-[auto_1fr] gap-x-2">
