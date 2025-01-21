@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "./axios";
 
 export const fetchImages = async ({
   pageParam = 1,
@@ -26,6 +27,15 @@ export const fetchImages = async ({
 
   return data;
 };
+
+export async function getPhoto(id: string) {
+  try {
+    const res = await axiosInstance.get(`/photos/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error(`Failed to fetch photo with id ${id}:`, error);
+  }
+}
 
 export const fetchSingleImage = async (id: string): Promise<UnsplashImage> => {
   const { data } = await axios.get(`/api/unsplash/${id}`);

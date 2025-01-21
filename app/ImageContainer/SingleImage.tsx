@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/legacy/image";
-import { Download } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { motion } from "motion/react";
 import { useQuery } from "@/hooks/useQuery";
 import { useRouter } from "next/navigation";
@@ -69,7 +69,7 @@ const SingleImage = ({ photo }: SingleImageProps) => {
           onClick={openMoal}
           className="bg-gray-100 cursor-pointer w-fit flex ms-auto hover:bg-gray-200 transition-all duration-300   p-2 rounded-lg"
         >
-          <Download size={20} />
+          <ChevronDown size={20} />
         </button>
       </div>
     </div>

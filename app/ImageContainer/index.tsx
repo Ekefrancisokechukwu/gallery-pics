@@ -79,8 +79,6 @@ const ImageContainer = () => {
       isImageDataProps(page) ? page.results : page
     ) || [];
 
-  console.log(data);
-
   return (
     <main className="px-8 pt-6  grid grid-cols-[auto_1fr] gap-x-2">
       <FilterSidebar />

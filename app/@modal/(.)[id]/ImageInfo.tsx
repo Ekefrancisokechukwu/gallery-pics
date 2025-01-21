@@ -1,7 +1,7 @@
 "use client";
 
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { Download, MapPin } from "lucide-react";
+import { ChevronDown, MapPin } from "lucide-react";
 import Image from "next/legacy/image";
 import { useRef } from "react";
 import { motion } from "motion/react";
@@ -10,11 +10,11 @@ interface ImageModalProps {
   data: UnsplashImage;
 }
 
-export const ImageModal = ({ data }: ImageModalProps) => {
+const ImageInfo = ({ data }: ImageModalProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { isOpen, setIsopen } = useClickOutside(containerRef);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div>
@@ -43,7 +43,7 @@ export const ImageModal = ({ data }: ImageModalProps) => {
               onClick={() => setIsopen(!isOpen)}
               className="border text-white bg-stone-950 rounded-lg px-3 py-1.5 hover:bg-opacity-60 flex items-center gap-x-2  text-sm font-semibold"
             >
-              Download <Download size={19} />
+              Download <ChevronDown size={20} />
             </button>
             <div
               className={`absolute transition-all duration-150 origin-top-right ease-in right-0 z-50 top-[110%]  w-[10rem] bg-white border shadow-xl rounded-lg p-4  ${
@@ -72,6 +72,7 @@ export const ImageModal = ({ data }: ImageModalProps) => {
           />
         </div>
       </div>
+
       <div className="mt-8 flex  items-center gap-x-28">
         <div className="text-sm">
           <h4 className="font-semibold text-gray-500">Views</h4>
@@ -82,19 +83,36 @@ export const ImageModal = ({ data }: ImageModalProps) => {
           <p className="font-semibold">{data.downloads}</p>
         </div>
       </div>
-      {data.description && <p className="mt-4 text-sm">{data.description}</p>}
+      {data.description && <p className="mt-7 text-sm">{data.description}</p>}
       <ul className="mt-5">
-        {data.location.city ||
-          (data.location.country && (
-            <li className="flex items-center text-gray-400">
-              <MapPin size={18} />
-              <span>
-                {data.location.city && `${data.location.city},`}
-                {data.location.country && data.location.country}
-              </span>
-            </li>
-          ))}
+        {data.location.country && (
+          <li className="flex items-center text-gray-400 gap-x-3">
+            <MapPin size={18} />
+            <span>
+              {data.location.city && `${data.location.city},`}
+              {data.location.country && data.location.country}
+            </span>
+          </li>
+        )}
       </ul>
+
+      <div className="mt-9 flex items-center gap-2 flex-wrap">
+        {data.tags.map((tag, i) => {
+          return (
+            <motion.button
+              whileHover={{ scale: 0.94 }}
+              whileTap={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 110 }}
+              key={i}
+              className="px-2 py-1 capitalize hover:bg-neutral-200 inline-block bg-neutral-100 text-gray-500 text-sm rounded"
+            >
+              {tag.title}
+            </motion.button>
+          );
+        })}
+      </div>
     </div>
   );
 };
+
+export default ImageInfo;
