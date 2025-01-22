@@ -5,16 +5,61 @@ import { ChevronDown, MapPin } from "lucide-react";
 import Image from "next/legacy/image";
 import { useRef } from "react";
 import { motion } from "motion/react";
+import axiosInstance from "@/lib/axios";
+import Link from "next/link";
+import axios from "axios";
+// import { downloadImage } from "@/lib/dataAsync";
 
 interface ImageModalProps {
   data: UnsplashImage;
+}
+
+async function downloadImage(image: UnsplashImage) {
+  try {
+    const trackDownloadResponse = await axios(
+      `https://api.unsplash.com/photos/${image.id}/download`,
+      {
+        headers: {
+          Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
+        },
+      }
+    );
+
+    const downloadUrl = trackDownloadResponse.data.url;
+
+    console.log(downloadUrl);
+
+    // Trigger download
+    // const response = await axios(downloadUrl, { responseType: "blob" });
+
+    // const blob = response.data;
+    // const url = window.URL.createObjectURL(blob);
+
+    // // Create link element
+    // const a = document.createElement("a");
+    // a.href = url;
+    // a.download = "image.jpg";
+    // document.body.appendChild(a);
+    // a.click();
+    // document.body.removeChild(a);
+
+    // window.URL.revokeObjectURL(url);
+
+    // const blob = await response.();
+  } catch (error) {
+    console.log(error, "yea am the error");
+  }
 }
 
 const ImageInfo = ({ data }: ImageModalProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { isOpen, setIsopen } = useClickOutside(containerRef);
 
-  // console.log(data);
+  console.log(data);
+
+  const triggerDownload = () => {
+    downloadImage(data);
+  };
 
   return (
     <div>
@@ -40,18 +85,18 @@ const ImageInfo = ({ data }: ImageModalProps) => {
         <div>
           <div ref={containerRef} className="relative">
             <button
-              onClick={() => setIsopen(!isOpen)}
+              onClick={triggerDownload}
               className="border text-white bg-stone-950 rounded-lg px-3 py-1.5 hover:bg-opacity-60 flex items-center gap-x-2  text-sm font-semibold"
             >
               Download <ChevronDown size={20} />
             </button>
-            <div
+            {/* <div
               className={`absolute transition-all duration-150 origin-top-right ease-in right-0 z-50 top-[110%]  w-[10rem] bg-white border shadow-xl rounded-lg p-4  ${
                 isOpen
                   ? "visible opacity-100 scale-100"
                   : "invisible opacity-0 scale-75"
               } `}
-            ></div>
+            ></div> */}
           </div>
         </div>
       </div>

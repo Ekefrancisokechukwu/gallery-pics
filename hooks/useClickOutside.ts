@@ -7,15 +7,6 @@ export const useClickOutside = (
 ) => {
   const [isOpen, setIsopen] = useState(false);
 
-  // const handleClickOutside = (events: EventType) => {
-  //   if (
-  //     refContainer.current &&
-  //     !refContainer.current.contains(events.target as Node)
-  //   ) {
-  //     setIsopen(false);
-  //   }
-  // };
-
   const handleClickOutside = useCallback(
     (events: EventType) => {
       if (
@@ -33,8 +24,8 @@ export const useClickOutside = (
     document.addEventListener("touchstart", handleClickOutside);
 
     return () => {
-      document.addEventListener("mousedown", handleClickOutside);
-      document.addEventListener("touchstart", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, [refContainer, isOpen, handleClickOutside]);
 

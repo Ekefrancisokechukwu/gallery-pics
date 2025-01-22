@@ -41,3 +41,40 @@ export const fetchSingleImage = async (id: string): Promise<UnsplashImage> => {
   const { data } = await axios.get(`/api/unsplash/${id}`);
   return data;
 };
+
+async function downloadImage(image: UnsplashImage) {
+  try {
+    const trackDownloadResponse = await axios(
+      `https://api.unsplash.com/photos/${image.id}/download`,
+      {
+        headers: {
+          Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
+        },
+      }
+    );
+
+    const downloadUrl = trackDownloadResponse.data.url;
+
+    console.log(downloadUrl);
+
+    // Trigger download
+    // const response = await axios(downloadUrl, { responseType: "blob" });
+
+    // const blob = response.data;
+    // const url = window.URL.createObjectURL(blob);
+
+    // // Create link element
+    // const a = document.createElement("a");
+    // a.href = url;
+    // a.download = "image.jpg";
+    // document.body.appendChild(a);
+    // a.click();
+    // document.body.removeChild(a);
+
+    // window.URL.revokeObjectURL(url);
+
+    // const blob = await response.();
+  } catch (error) {
+    console.log(error, "yea am the error");
+  }
+}
