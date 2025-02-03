@@ -5,7 +5,7 @@ export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const id = params.id;
+  const id = await params.id;
 
   try {
     const trackDownloadResponse = await axiosInstance.get(

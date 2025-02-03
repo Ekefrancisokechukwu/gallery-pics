@@ -6,7 +6,7 @@ import Sort from "@/components/layouts/Sort";
 export default function Home() {
   return (
     <div className=" font-[family-name:var(--font-geist-sans)] ">
-      <div className="sticky top-[5rem] bg-white z-50  mt-3 px-8 pb-1 flex items-center justify-between">
+      <div className="sticky top-[5rem] bg-white z-40  mt-3 px-8 pb-1 flex items-center justify-between">
         <Suspense>
           <FIlters />
         </Suspense>

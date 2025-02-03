@@ -33,7 +33,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <AppProvider>
-          <div className="sticky top-0 w-full bg-white z-50 pb-2">
+          <div className="sticky top-0 w-full bg-white z-[80] pb-2">
             <Header />
           </div>
 
