@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/legacy/image";
-import { ChevronDown } from "lucide-react";
 import { motion } from "motion/react";
 import { useQuery } from "@/hooks/useQuery";
 import { useRouter } from "next/navigation";
@@ -29,10 +28,10 @@ const SingleImage = ({ photo }: SingleImageProps) => {
   return (
     <div
       style={{ background: photo.color }}
-      className="mb-4 overflow-hidden group rounded-lg  relative transition-transform duration-300  ease-in-out"
+      className="mb-4 overflow-hidden group group rounded-lg  relative transition-transform duration-300  ease-in-out"
     >
       <div
-        className="relative"
+        className="relative overflow-hidden"
         style={{
           paddingTop: `${(photo.height / photo.width) * 100}%`,
         }}
@@ -43,10 +42,13 @@ const SingleImage = ({ photo }: SingleImageProps) => {
           layout="fill"
           objectFit="cover"
           sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 33vw"
-          className="transition-opacity duration-300 object-cover"
+          className=" duration-300 object-cover group-hover:scale-110 transition-all ease-linear"
         />
       </div>
-      <div className="absolute z-30  inset-0 bg-black/20 opacity-0 invisible  px-4 pt-4  group-hover:opacity-100 group-hover:visible transition-all duration-500 ease-in-out  h-full w-full cursor-zoom-in">
+      <div
+        onClick={openMoal}
+        className="absolute z-30  inset-0 bg-black/20 opacity-0 invisible  px-4 pt-4  group-hover:opacity-100 group-hover:visible transition-all duration-500 ease-in-out  h-full w-full cursor-zoom-in"
+      >
         <div className="absolute left-3 cursor-default z-50 flex items-center gap-x-2 bottom-3">
           <motion.div
             layoutId={photo.id}
@@ -64,13 +66,6 @@ const SingleImage = ({ photo }: SingleImageProps) => {
             {photo.user.first_name} {photo.user.last_name}
           </p>
         </div>
-
-        <button
-          onClick={openMoal}
-          className="bg-gray-100 cursor-pointer w-fit flex ms-auto hover:bg-gray-200 transition-all duration-300   p-2 rounded-lg"
-        >
-          <ChevronDown size={20} />
-        </button>
       </div>
     </div>
   );

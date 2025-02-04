@@ -4,6 +4,7 @@ import { ChevronDown, LoaderIcon, MapPin } from "lucide-react";
 import Image from "next/legacy/image";
 import { useState } from "react";
 import { motion } from "motion/react";
+import { useRouter } from "next/navigation";
 
 interface ImageModalProps {
   data: UnsplashImage;
@@ -11,6 +12,7 @@ interface ImageModalProps {
 
 const ImageInfo = ({ data }: ImageModalProps) => {
   const [isDownloading, setIsDownloading] = useState(false);
+  const router = useRouter();
 
   const handleDownload = async () => {
     setIsDownloading(true);
@@ -34,9 +36,6 @@ const ImageInfo = ({ data }: ImageModalProps) => {
       setIsDownloading(false);
     }
   };
-
-
-  
 
   return (
     <div>
@@ -129,6 +128,9 @@ const ImageInfo = ({ data }: ImageModalProps) => {
               whileHover={{ scale: 0.94 }}
               whileTap={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 110 }}
+              onClick={() => {
+                router.push(`/?query=${tag.title}`);
+              }}
               key={i}
               className="px-2 py-1 capitalize hover:bg-neutral-200 inline-block bg-neutral-100 text-gray-500 text-sm rounded"
             >

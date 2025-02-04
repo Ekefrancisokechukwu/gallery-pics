@@ -114,10 +114,10 @@ const ImageContainer = () => {
               <SingleImage key={photo.id} photo={photo} />
             ))}
           </Masonry>
-          <div ref={observerTarget} className="h-10 mt-4" />
+          <div ref={observerTarget} className="h-[4rem] mt-4" />
           {isFetchingNextPage && (
             <div className="grid place-items-center">
-              <Loader2Icon className="animate-spin" />
+              <Loader2Icon size={25} className="animate-spin" />
             </div>
           )}
         </div>

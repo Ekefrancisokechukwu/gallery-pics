@@ -13,7 +13,7 @@ export const Modal = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <motion.div className="  z-50  fixed w-full overflow-y-scroll h-screen left-0 top-0">
+    <motion.div className="  z-[100]  fixed w-full overflow-y-scroll h-screen left-0 top-0">
       <motion.div
         initial={{ opacity: 0.8 }}
         animate={{ opacity: 1 }}
