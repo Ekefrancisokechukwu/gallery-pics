@@ -26,7 +26,7 @@ const FilterSidebar = () => {
 
   return (
     <div
-      className={`h-[calc(100vh_-123.75px)] pt-3 sticky top-[123.75px] z-50 w-[14rem] transition-all ease-in-out duration-300 bg-white  ${
+      className={`h-[calc(100vh_-123.75px)] pt-3 sticky top-[123.75px]  z-50 w-[14rem] transition-all ease-in-out duration-300 bg-white  ${
         isSidebarOpen ? "m-0" : "ml-[-20rem]"
       }`}
     >
