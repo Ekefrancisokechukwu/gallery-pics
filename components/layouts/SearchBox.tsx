@@ -107,7 +107,7 @@ const SearchBox = () => {
       )}
 
       {isOpen && (
-        <div className="w-full bg-white border  rounded-xl shadow-lg absolute z-[70] space-y-3   left-0 top-[110%]">
+        <div className="w-full bg-white border  rounded-xl shadow-lg absolute z-[900] space-y-3   left-0 top-[110%]">
           {searchInput ? (
             <>
               {data?.length > 0 && (

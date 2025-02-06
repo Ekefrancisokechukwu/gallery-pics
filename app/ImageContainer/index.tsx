@@ -81,9 +81,7 @@ const ImageContainer = () => {
 
   return (
     <main className="px-8 pt-6  grid md:grid-cols-[auto_1fr] gap-x-2">
-      <div className="md:block hidden">
-        <FilterSidebar />
-      </div>
+      <FilterSidebar />
 
       {isLoading ? (
         <Masonry

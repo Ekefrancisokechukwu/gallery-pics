@@ -1,16 +1,23 @@
 import axios from "axios";
 import axiosInstance from "./axios";
+import { QueryFunction } from "@tanstack/react-query";
 
-export const fetchImages = async ({
-  pageParam = 1,
-  queryKey,
-}: {
-  pageParam: number;
-  queryKey: [
-    string,
-    { query: string; orientation?: string; order_by?: string }
-  ];
-}) => {
+interface ImageQueryParams {
+  query: string;
+  orientation?: string;
+  order_by?: string;
+}
+
+interface UnsplashResponse {
+  results: Array<{ id: string; urls: { small: string } }>;
+  total_pages: number;
+}
+
+export const fetchImages: QueryFunction<
+  UnsplashResponse,
+  [string, ImageQueryParams],
+  number
+> = async ({ pageParam = 1, queryKey }) => {
   const [, { query, orientation, order_by }] = queryKey as [
     string,
     { query: string; orientation?: string; order_by?: string }
