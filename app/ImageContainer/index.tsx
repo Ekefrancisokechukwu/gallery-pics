@@ -1,7 +1,7 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useCallback, useEffect, useRef } from "react";
 import Masonry from "react-masonry-css";
 import { breakpointColumnsObj, loadingArray } from "./data";
 import { Loader2Icon } from "lucide-react";
@@ -25,6 +25,7 @@ const ImageContainer = () => {
     hasNextPage,
     isFetchingNextPage,
     status,
+    refetch,
   } = useInfiniteQuery({
     queryKey: [
       "images",
@@ -47,31 +48,45 @@ const ImageContainer = () => {
     },
   });
 
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [target] = entries;
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage]
+  );
+
   useEffect(() => {
+    const element = observerTarget.current;
+
     if (!hasNextPage || isFetchingNextPage) return;
+    const observer = new IntersectionObserver(handleObserver, { threshold: 1 });
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchNextPage();
-        }
-      },
-      { threshold: 1 }
-    );
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
+    if (element) {
+      observer.observe(element);
     }
 
     return () => {
-      if (observerTarget.current) observer.unobserve(observerTarget.current);
+      if (element) observer.unobserve(element);
     };
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [handleObserver, hasNextPage, isFetchingNextPage]);
 
   if (status === "error") {
     return (
-      <div className="px-8 py-10 text-center font-semibold text-lg">
-        {error.message || "An error occurred while fetching images"}
+      <div className="px-8 py-10 text-center">
+        <p className="font-semibold text-lg mb-4">
+          {error instanceof Error
+            ? error.message
+            : "An error occurred while fetching images"}
+        </p>
+        <button
+          onClick={() => refetch()}
+          className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+        >
+          Retry
+        </button>
       </div>
     );
   }
