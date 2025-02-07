@@ -3,9 +3,9 @@ import axiosInstance from "@/lib/axios";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = await params.id;
+  const { id } = await params;
 
   try {
     const trackDownloadResponse = await axiosInstance.get(
@@ -13,7 +13,6 @@ export async function GET(
     );
     const downloadUrl = trackDownloadResponse.data.url;
 
-    // Now, we fetch the image
     const imageResponse = await fetch(downloadUrl);
     const arrayBuffer = await imageResponse.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
@@ -22,11 +21,10 @@ export async function GET(
     const headers = new Headers();
     headers.set(
       "Content-Disposition",
-      `attachment; filename="unsplash-${id}.jpg"`
+      `attachment; filename="gallery-${id}.jpg"`
     );
     headers.set("Content-Type", "image/jpeg");
 
-    // Return the image as a downloadable file
     return new NextResponse(buffer, {
       status: 200,
       headers,

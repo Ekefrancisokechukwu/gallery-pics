@@ -2,24 +2,27 @@ import { Modal } from "@/components/ui/Modal";
 import ImageInfo from "./ImageInfo";
 import { notFound } from "next/navigation";
 import { getPhoto } from "@/lib/dataAsync";
+import { Suspense } from "react";
 
 export default async function PreviewPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id: slug } = await params;
+  const slug = (await params).id;
   const id = slug.split("_id").pop();
-
-  const data = await getPhoto(id!);
 
   if (!id) {
     notFound();
   }
 
+  const data = await getPhoto(id!);
+
   return (
-    <Modal>
-      <ImageInfo data={data} />
-    </Modal>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Modal>
+        <ImageInfo data={data} />
+      </Modal>
+    </Suspense>
   );
 }

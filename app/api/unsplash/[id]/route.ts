@@ -4,9 +4,9 @@ import axiosInstance from "@/lib/axios";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = params.id;
+  const id = (await params).id;
 
   try {
     const response = await axiosInstance.get(`/photos/${id}`);

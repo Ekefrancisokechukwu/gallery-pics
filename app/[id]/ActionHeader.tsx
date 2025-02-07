@@ -1,6 +1,5 @@
 "use client";
 
-import { useClickOutside } from "@/hooks/useClickOutside";
 import { ChevronDown, LoaderIcon } from "lucide-react";
 import Image from "next/legacy/image";
 import { useRef, useState } from "react";
@@ -12,7 +11,6 @@ type ActionHeaderProps = {
 
 const ActionHeader = ({ data }: ActionHeaderProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { isOpen, setIsopen } = useClickOutside(containerRef);
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownload = async () => {
@@ -26,7 +24,7 @@ const ActionHeader = ({ data }: ActionHeaderProps) => {
       const a = document.createElement("a");
       a.style.display = "none";
       a.href = url;
-      a.download = `unsplash-${data.id}.jpg`;
+      a.download = `gallery-pic-${data.id}.jpg`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -47,7 +45,7 @@ const ActionHeader = ({ data }: ActionHeaderProps) => {
         >
           <Image
             src={data.user.profile_image.small}
-            alt="profile"
+            alt={data.alt_description}
             width={400}
             height={400}
             className="rounded-full"
@@ -74,13 +72,6 @@ const ActionHeader = ({ data }: ActionHeaderProps) => {
               </>
             )}
           </motion.button>
-          <div
-            className={`absolute transition-all duration-150 origin-top-right ease-in right-0 z-50 top-[110%]  w-[10rem] bg-white border shadow-xl rounded-lg p-4  ${
-              isOpen
-                ? "visible opacity-100 scale-100"
-                : "invisible opacity-0 scale-75"
-            } `}
-          ></div>
         </div>
       </div>
     </div>

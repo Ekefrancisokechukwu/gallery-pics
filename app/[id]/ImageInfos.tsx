@@ -14,8 +14,6 @@ const ImageInfos = ({ data }: ImageInfoProps) => {
   const scaledWidth = maxWidth;
   const scaledHeight = maxWidth / aspectRatio;
 
-  console.log("tags Better", data.tags);
-
   return (
     <div>
       <div className="mt-7 grid place-items-center">

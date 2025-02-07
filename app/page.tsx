@@ -16,7 +16,9 @@ export default function Home() {
           <Sort />
         </Suspense>
       </div>
-      <ImageContainer />
+      <Suspense>
+        <ImageContainer />
+      </Suspense>
     </div>
   );
 }

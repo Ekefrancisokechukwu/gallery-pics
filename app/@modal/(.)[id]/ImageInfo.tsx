@@ -129,6 +129,7 @@ const ImageInfo = ({ data }: ImageModalProps) => {
               whileTap={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 110 }}
               onClick={() => {
+                router.back();
                 router.push(`/?query=${tag.title}`);
               }}
               key={i}

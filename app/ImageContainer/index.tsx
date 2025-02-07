@@ -1,7 +1,7 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import Masonry from "react-masonry-css";
 import { breakpointColumnsObj, loadingArray } from "./data";
 import { Loader2Icon } from "lucide-react";
@@ -13,9 +13,9 @@ import { fetchImages } from "@/lib/dataAsync";
 const ImageContainer = () => {
   const observerTarget = useRef<HTMLDivElement>(null);
   const { getParam } = useURLQuery();
-  const query = getParam("query");
-  const orientation = getParam("orientation");
-  const order_by = getParam("order_by");
+  const query = getParam("query") || "";
+  const orientation = getParam("orientation") || "";
+  const order_by = getParam("order_by") || "";
 
   const {
     data,
@@ -29,13 +29,15 @@ const ImageContainer = () => {
     queryKey: [
       "images",
       {
-        query: query || "",
-        orientation: orientation || "",
-        order_by: order_by || "",
+        query: query,
+        orientation: orientation,
+        order_by: order_by,
       },
-    ],
-    queryFn: fetchImages,
-    initialPageParam: 0,
+    ] as const,
+    queryFn: ({ pageParam = 1, queryKey }) =>
+      fetchImages({ pageParam, queryKey }),
+
+    initialPageParam: 1,
     staleTime: 5000,
     getNextPageParam: (lastPage, pages) => {
       if (pages.length < lastPage.total_pages) {
@@ -81,7 +83,9 @@ const ImageContainer = () => {
 
   return (
     <main className="px-8 pt-6  grid md:grid-cols-[auto_1fr] gap-x-2">
-      <FilterSidebar />
+      <Suspense>
+        <FilterSidebar />
+      </Suspense>
 
       {isLoading ? (
         <Masonry
