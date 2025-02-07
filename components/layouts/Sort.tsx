@@ -8,11 +8,8 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 
 const sortBy = ["latest", "relevant"];
 
-// type EventType = MouseEvent | TouchEvent;
-
 const Sort = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  // const [isOpen, setIsopen] = useState(false);
   const { getParam, setParam } = useQuery();
   const { isOpen, setIsopen } = useClickOutside(containerRef);
   const orderBy = getParam("order_by") || "relevant";

@@ -60,7 +60,7 @@ const ActionHeader = ({ data }: ActionHeaderProps) => {
             disabled={isDownloading}
             layout
             onClick={handleDownload}
-            className="border text-white disabled:opacity-60 bg-stone-950 rounded-lg px-3 py-1.5 hover:bg-opacity-60 flex items-center gap-x-2  text-sm font-semibold"
+            className="border text-white disabled:opacity-60 bg-stone-900 rounded-lg px-3 py-1.5 hover:bg-opacity-60 flex items-center gap-x-2  text-sm font-semibold"
           >
             {isDownloading ? (
               <>

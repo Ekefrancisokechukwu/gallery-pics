@@ -31,7 +31,6 @@ const ImageInfo = ({ data }: ImageModalProps) => {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Download error:", error);
-      alert("Failed to download image. Please try again.");
     } finally {
       setIsDownloading(false);
     }
